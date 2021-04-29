@@ -27,19 +27,17 @@ jobs:
     steps:
       - checkout
       - run:
-            name: "echo SURGE_LOGIN"
-            command: |
-              echo $SURGE_LOGIN
+            name: "Run Build"
+            command: yarn build
   deploy-to-staging:
     docker:
       - image: cimg/node:14.15.4
-    working_directory: ~/project
     steps:
-      - attach_workspace:
-          at: ~/project
+      - checkout
       - run:
-          name: Deploy to Staging
-          command: npx surge build/ https://ci-ci-practical-staging.surge.sh
+            name: "deploy to staging - surge"
+            command: |
+              npx surge build/ https://ci-ci-practical-staging.surge.sh
 
 
 workflows:
@@ -52,4 +50,5 @@ workflows:
             branches:
               only: master
 
+  
   
