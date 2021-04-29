@@ -36,9 +36,9 @@ jobs:
     steps:
       - checkout
       - run:
-            name: "deploy to staging"
+            name: "deploy to staging - surge"
             command: |
-              - surge --project build/ --ci-cd-practical-staging-surge-sh
+              - npx surge --project build/ --ci-cd-practical-staging.surge.sh
 
 
 workflows:
