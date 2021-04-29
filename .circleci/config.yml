@@ -40,6 +40,14 @@ jobs:
       - run: npm install surge
       - run: yarn build
       - run: yarn e2e
+  performance-test:
+    docker:
+      - image: cimg/node:14.15.4-browsers
+    steps:
+      - checkout
+      - run: npm install surge
+      - run: yarn build
+      - run: yarn performance
 
 
 
@@ -52,6 +60,9 @@ workflows:
            branches:
              only: master
       - ui-tests:
+          requires:
+            - deploy-to-staging
+      - performance-test:
           requires:
             - deploy-to-staging
 
