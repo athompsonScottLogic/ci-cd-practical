@@ -78,17 +78,19 @@ workflows:
       - performance-test:
           requires:
             - deploy-to-staging
-      - hold-production-deploy:
-          type: approval
-          requires:
-            - performance-test
-            - ui-tests
-          filters:
-            branches:
-              only: master
+      #- hold-production-deploy:
+      #    type: approval
+      #    requires:
+      #      - performance-test
+      #      - ui-tests
+      #    filters:
+      #      branches:
+      #        only: master
       - deploy-to-production:
           requires:
-            - hold-production-deploy
+            - ui-tests
+            - performance-test
+      #      - hold-production-deploy
 
 
   
