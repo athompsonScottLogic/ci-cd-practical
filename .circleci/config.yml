@@ -1,5 +1,7 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.1.0
 jobs:
   test:
     docker:
@@ -44,6 +46,7 @@ jobs:
     docker:
       - image: cimg/node:14.15.4-browsers
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - run: npm install surge
       - run: yarn build
