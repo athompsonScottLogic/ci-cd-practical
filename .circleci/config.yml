@@ -33,12 +33,13 @@ jobs:
   deploy-to-staging:
     docker:
       - image: cimg/node:14.15.4
+    working_directory: ~/project
     steps:
-      - checkout
+      - attach_workspace:
+          at: ~/project
       - run:
-            name: "deploy to staging - surge"
-            command: |
-              npx surge build/ https://ci-ci-practical-staging.surge.sh
+          name: Deploy to Staging
+          command: npx surge build/ https://ci-ci-practical-staging.surge.sh
 
 
 workflows:
