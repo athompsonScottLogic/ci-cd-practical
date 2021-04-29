@@ -26,6 +26,7 @@ jobs:
       - image: cimg/node:14.15.4
     steps:
       - checkout
+      - run: npm install surge
       - run:
             name: "Run Build"
             command: yarn build
@@ -37,7 +38,7 @@ jobs:
       - run:
             name: "deploy to staging - surge"
             command: |
-              npx surge build/ https://ci-ci-practical-staging.surge.sh
+              npx surge --project build --domain ci-ci-practical-staging.surge.sh
 
 
 workflows:
