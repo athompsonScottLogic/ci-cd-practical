@@ -38,7 +38,7 @@ jobs:
       - run:
             name: "deploy to staging - surge"
             command: |
-              - npx surge --project build/ --ci-cd-practical-staging.surge.sh
+              npx surge build/ https://ci-ci-practical-staging.surge.sh
 
 
 workflows:
@@ -47,9 +47,6 @@ workflows:
       - test
       - build
       - deploy-to-staging:
-          requires:
-            - test
-            - build
           filters:
             branches:
               only: master
