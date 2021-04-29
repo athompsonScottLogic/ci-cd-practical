@@ -27,18 +27,16 @@ jobs:
     steps:
       - checkout
       - run: npm install surge
-      - run:
-            name: "Run Build"
-            command: yarn build
+      - run: yarn build
   deploy-to-staging:
     docker:
       - image: cimg/node:14.15.4
     steps:
       - checkout
       - run:
-            name: "deploy to staging - surge"
+            name: "Deploy to Staging - Surge"
             command: |
-              npx surge --project build --domain ci-ci-practical-staging.surge.sh
+              npx surge build/ https://ci-ci-practical-staging.surge.sh
 
 
 workflows:
@@ -47,9 +45,11 @@ workflows:
       - test
       - build
       - deploy-to-staging:
-          filters:
-            branches:
-              only: master
+         requires:
+           - test
+           - build
+         filters:
+           branches:
+             only: master
 
-  
   
