@@ -34,6 +34,17 @@ jobs:
             name: "Deploy to Staging - Surge"
             command: |
               npx surge --project build --domain ci-ci-practical-staging.surge.sh
+  deploy-to-production:
+    docker:
+      - image: cimg/node:14.15.4
+    steps:
+      - checkout
+      - run: npm install surge
+      - run: yarn build
+      - run:
+            name: "Deploy to Production - Surge"
+            command: |
+              npx surge --project build --domain ci-ci-practical.surge.sh
   ui-tests:
     docker:
       - image: cimg/node:14.15.4-browsers
@@ -67,7 +78,7 @@ workflows:
       - performance-test:
           requires:
             - deploy-to-staging
-      - hold_production_deploy:
+      - hold-production-deploy:
           type: approval
           requires:
             - performance-test
@@ -75,6 +86,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-to-production:
+          requires:
+            - hold-production-deploy
 
 
   
