@@ -30,6 +30,15 @@ jobs:
             name: "echo SURGE_LOGIN"
             command: |
               echo $SURGE_LOGIN
+  deploy-to-staging:
+    docker:
+      - image: cimg/node:14.15.4
+    steps:
+      - checkout
+      - run:
+            name: "deploy to staging"
+            command: |
+              - surge --project build/ --ci-cd-practical-staging-surge-sh
 
 
 workflows:
@@ -37,5 +46,12 @@ workflows:
     jobs:
       - test
       - build
+      - deploy-to-staging:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              only: master
 
   
